@@ -1,11 +1,14 @@
 import cores from 'cors';
 import express, { Application, NextFunction, Request, Response } from 'express';
 import httpStatus from 'http-status';
+import config from './config';
+import router from './router';
 
 const app: Application = express();
 app.use(cores());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(config.api_route as string, router);
 
 app.use('/test', (req, res) => {
   const message = `Server is running ${new Date()}`;
