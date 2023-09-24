@@ -4,11 +4,10 @@ import sendResponse from '../../utils/sendRespnse';
 import { authService } from './auth.service';
 import { authValidator } from './auth.validator';
 import ApiError from '../../errorHandlers/apiError';
+import httpStatus from 'http-status';
 
 const signup = catchAsync(async (req: Request, res: Response) => {
-  const { error } = await authValidator.createUserValidatorSchema.validate(
-    req.body
-  );
+  const { error } = await authValidator.signupValidator.validate(req.body);
   if (error) {
     throw new ApiError(400, error.message);
   }
@@ -21,6 +20,21 @@ const signup = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const login = catchAsync(async (req: Request, res: Response) => {
+  const { error } = await authValidator.signinValidator.validate(req.body);
+  if (error) {
+    throw new ApiError(400, error.message);
+  }
+  const result = await authService.signin(req.body);
+  res.send({
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'User signin successfully!',
+    token: result,
+  });
+});
+
 export const authController = {
   signup,
+  login,
 };

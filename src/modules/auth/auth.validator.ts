@@ -1,6 +1,6 @@
 import Joi from 'joi';
 
-const createUserValidatorSchema = Joi.object({
+const signupValidator = Joi.object({
   name: Joi.string().required().messages({
     'string.pattern.base': 'Please enter a valid name',
     'any.required': 'name is required',
@@ -30,7 +30,22 @@ const createUserValidatorSchema = Joi.object({
     'any.required': 'profile img is required',
   }),
 });
+const signinValidator = Joi.object({
+  email: Joi.string()
+    .pattern(new RegExp('^\\S+@\\S+\\.\\S+$'))
+    .required()
+    .messages({
+      'string.pattern.base': 'Please enter a valid email address',
+      'any.required': 'Email is required',
+    }),
+  password: Joi.string().min(5).max(16).required().messages({
+    'string.min': 'Password must be at least {#limit} characters long',
+    'string.max': 'Password cannot exceed {#limit} characters',
+    'any.required': 'Password is required',
+  }),
+});
 
 export const authValidator = {
-  createUserValidatorSchema,
+  signupValidator,
+  signinValidator,
 };
