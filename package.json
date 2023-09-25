@@ -45,5 +45,5 @@
     "jsonwebtoken": "^9.0.2",
     "prisma": "^5.3.1"
   },
-  "repository": "https://github.com/MainUddin1223/book-catalog-backend"
+  "repository": "github.com:MainUddin1223/book-catalog-backend.git"
 }

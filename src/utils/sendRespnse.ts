@@ -1,14 +1,15 @@
 import { Response } from 'express';
-
+export type IMeta = {
+  page?: number;
+  size?: number;
+  total?: number;
+  totalPage?: number;
+};
 type IApiResponse<T> = {
   statusCode: number;
   success: boolean;
   message?: string | null;
-  meta?: {
-    page?: number;
-    limit?: number;
-    total?: number;
-  };
+  meta?: IMeta;
   data?: T | null;
 };
 

@@ -5,6 +5,10 @@ const signupValidator = Joi.object({
     'string.pattern.base': 'Please enter a valid name',
     'any.required': 'name is required',
   }),
+  role: Joi.string().required().valid('admin', 'customer').messages({
+    'string.pattern.base': 'Please enter a valid role',
+    'any.required': 'role is required',
+  }),
   email: Joi.string()
     .pattern(new RegExp('^\\S+@\\S+\\.\\S+$'))
     .required()

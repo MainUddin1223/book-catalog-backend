@@ -18,9 +18,12 @@ const verifyAuthWithRole = (allowedRoles: string[]) => {
         config.jwt.jwt_access_secret as string
       );
       req.user = decoded;
+      if (!decoded.userId) {
+        return res.status(401).json({ message: 'Unauthorized' });
+      }
       const isUserExist = await prisma.user.findUnique({
         where: {
-          id: req?.user?.id,
+          id: req?.user?.userId,
         },
       });
       if (!isUserExist || !allowedRoles.includes(req.user?.role)) {
@@ -46,6 +49,9 @@ const verifyAuth = () => {
         config.jwt.jwt_access_secret as string
       );
       req.user = decoded;
+      if (!decoded.id) {
+        return res.status(401).json({ message: 'Unauthorized' });
+      }
       const isUserExist = await prisma.user.findUnique({
         where: {
           id: req?.user?.id,

@@ -17,6 +17,7 @@ const getAllUsers = async (): Promise<Partial<User>[]> => {
 };
 
 const getUserById = async (id: string): Promise<Partial<User | null>> => {
+  console.log(id);
   const result = await prisma.user.findUnique({
     where: {
       id,
