@@ -1,31 +1,8 @@
-/*
-  Warnings:
-
-  - You are about to drop the `Post` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `Profile` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `User` table. If the table is not empty, all the data it contains will be lost.
-
-*/
 -- CreateEnum
 CREATE TYPE "Role" AS ENUM ('admin', 'customer');
 
 -- CreateEnum
 CREATE TYPE "StatusType" AS ENUM ('pending', 'shipped');
-
--- DropForeignKey
-ALTER TABLE "Post" DROP CONSTRAINT "Post_authorId_fkey";
-
--- DropForeignKey
-ALTER TABLE "Profile" DROP CONSTRAINT "Profile_userId_fkey";
-
--- DropTable
-DROP TABLE "Post";
-
--- DropTable
-DROP TABLE "Profile";
-
--- DropTable
-DROP TABLE "User";
 
 -- CreateTable
 CREATE TABLE "users" (
@@ -37,6 +14,8 @@ CREATE TABLE "users" (
     "contactNo" TEXT NOT NULL,
     "address" TEXT NOT NULL,
     "profileImg" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "users_pkey" PRIMARY KEY ("id")
 );
@@ -45,6 +24,8 @@ CREATE TABLE "users" (
 CREATE TABLE "categories" (
     "id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "categories_pkey" PRIMARY KEY ("id")
 );
@@ -56,8 +37,10 @@ CREATE TABLE "books" (
     "author" TEXT NOT NULL,
     "price" DECIMAL(10,2) NOT NULL,
     "genre" TEXT NOT NULL,
-    "publicationDate" TIMESTAMP(3) NOT NULL,
+    "publicationDate" TEXT NOT NULL,
     "categoryId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "books_pkey" PRIMARY KEY ("id")
 );
@@ -69,6 +52,8 @@ CREATE TABLE "reviewAndRatings" (
     "rating" INTEGER NOT NULL,
     "userId" TEXT NOT NULL,
     "bookId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "reviewAndRatings_pkey" PRIMARY KEY ("id")
 );
@@ -80,6 +65,7 @@ CREATE TABLE "orders" (
     "orderdBook" JSONB[],
     "status" "StatusType" NOT NULL DEFAULT 'pending',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "orders_pkey" PRIMARY KEY ("id")
 );

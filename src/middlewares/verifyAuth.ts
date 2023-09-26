@@ -35,36 +35,33 @@ const verifyAuthWithRole = (allowedRoles: string[]) => {
     }
   };
 };
+const verifyAuth = async (req: Request, res: Response, next: NextFunction) => {
+  const token = req.headers.authorization;
+  if (!token) {
+    return res.status(401).json({ message: 'Unauthorized' });
+  }
 
-const verifyAuth = () => {
-  return async (req: Request, res: Response, next: NextFunction) => {
-    const token = req.headers.authorization;
-    if (!token) {
+  try {
+    const decoded = jwtHelpers.verifyToken(
+      token,
+      config.jwt.jwt_access_secret as string
+    );
+    req.user = decoded;
+    if (!decoded.userId) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
-
-    try {
-      const decoded = jwtHelpers.verifyToken(
-        token,
-        config.jwt.jwt_access_secret as string
-      );
-      req.user = decoded;
-      if (!decoded.id) {
-        return res.status(401).json({ message: 'Unauthorized' });
-      }
-      const isUserExist = await prisma.user.findUnique({
-        where: {
-          id: req?.user?.id,
-        },
-      });
-      if (!isUserExist) {
-        return res.status(401).json({ message: 'Unauthorized' });
-      }
-      next();
-    } catch (error) {
-      next(error);
+    const isUserExist = await prisma.user.findUnique({
+      where: {
+        id: req?.user?.userId,
+      },
+    });
+    if (!isUserExist) {
+      return res.status(401).json({ message: 'Unauthorized' });
     }
-  };
+    next();
+  } catch (error) {
+    next(error);
+  }
 };
 
 const verifyAdmin = verifyAuthWithRole(['admin']);
