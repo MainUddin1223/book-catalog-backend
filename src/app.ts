@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(config.api_route as string, router);
 
-app.use('/test', (req, res) => {
+app.use('/', (req, res) => {
   const message = `Server is running ${new Date()}`;
   res.status(httpStatus.OK).json({
     message,
