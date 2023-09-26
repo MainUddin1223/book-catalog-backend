@@ -5,6 +5,7 @@ import userRouter from '../modules/user/user.route';
 import categoryRouter from '../modules/category/category.route';
 import bookRouter from '../modules/book/book.route';
 import profileRouter from '../modules/user/profileRoute';
+import orderRouter from '../modules/order/order.route';
 const router = express.Router();
 
 const defaultRoutes = [
@@ -27,6 +28,10 @@ const defaultRoutes = [
   {
     path: '/profile',
     route: profileRouter.profileRouter,
+  },
+  {
+    path: '/orders',
+    route: orderRouter.orderRouter,
   },
 ];
 defaultRoutes.forEach(route => {

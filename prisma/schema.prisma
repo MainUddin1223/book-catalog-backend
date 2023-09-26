@@ -73,13 +73,13 @@ model ReviewAndRating {
 }
 
 model Order {
-  id         String     @id @default(uuid())
-  userId     String
-  orderdBook Json[]
-  status     StatusType @default(pending)
-  user       User       @relation(fields: [userId], references: [id])
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @default(now()) @updatedAt
+  id           String     @id @default(uuid())
+  userId       String
+  orderedBooks Json[]     @default([])
+  status       StatusType @default(pending)
+  user         User       @relation(fields: [userId], references: [id])
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @default(now()) @updatedAt
 
   @@map("orders")
 }
