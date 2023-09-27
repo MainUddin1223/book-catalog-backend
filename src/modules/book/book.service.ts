@@ -6,6 +6,14 @@ const prisma = new PrismaClient();
 const createBook = async (data: Book): Promise<Book> => {
   const result = await prisma.book.create({
     data,
+    include: {
+      category: {
+        select: {
+          id: true,
+          title: true,
+        },
+      },
+    },
   });
   return result;
 };

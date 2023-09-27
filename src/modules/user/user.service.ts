@@ -56,7 +56,7 @@ const updateUser = async (id: string, payload: Partial<User>) => {
 };
 
 const deleteUser = async (id: string) => {
-  await prisma.user.delete({
+  const result = await prisma.user.delete({
     where: {
       id,
     },
@@ -70,7 +70,7 @@ const deleteUser = async (id: string) => {
       profileImg: true,
     },
   });
-  return {};
+  return result;
 };
 
 const getProfile = async (id: string): Promise<Partial<User> | null> => {

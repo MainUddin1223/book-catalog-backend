@@ -13,7 +13,7 @@ app.use((0, cors_1.default)());
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use(config_1.default.api_route, router_1.default);
-app.use('/test', (req, res) => {
+app.use('/', (req, res) => {
     const message = `Server is running ${new Date()}`;
     res.status(http_status_1.default.OK).json({
         message,

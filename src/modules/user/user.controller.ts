@@ -48,7 +48,7 @@ const deleteUser = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: 200,
     success: true,
-    message: 'User updated successfully',
+    message: 'User deleted successfully',
     data: result,
   });
 });
@@ -59,7 +59,7 @@ const getProfile = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: 200,
     success: true,
-    message: 'User updated successfully',
+    message: 'Profile retrieved successfully',
     data: result,
   });
 });

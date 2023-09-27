@@ -23,7 +23,7 @@ const getBooks = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: 200,
     success: true,
-    message: 'Book created successfully',
+    message: 'Books fetched successfully',
     data: result,
   });
 });
